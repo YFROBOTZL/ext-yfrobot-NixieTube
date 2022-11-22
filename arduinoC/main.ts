@@ -10,73 +10,23 @@
  * @date  2022-11-22
 */
 
-enum LEDONOFF {
-    //% block="OFF"
-    HIGH,
-    //% block="ON"
-    LOW
+enum DOT {
+    //% block="亮"
+    true,
+    //% block="灭"
+    false
 }
 
-enum LEDN {
-    //% block="D1"
+enum CLEAR {
+    //% block="开"
     0,
-    //% block="D2"
-    1
-}
-
-enum MOTORN {
-    //% block="RIGHT"
-    0,
-    //% block="LEFT"
-    1
-}
-
-
-enum ENDIS {
-    //% block="ENABLE"
-    HIGH,
-    //% block="DISABLE"
-    LOW
-}
-
-enum LFSENSORSNUM {
-    //% blockId="LFS_1" block="●○○○○"
-    0,
-    //% blockId="LFS_2" block="○●○○○"
+    //% block="关"
     1,
-    //% blockId="LFS_3" block="○○●○○"
-    2,
-    //% blockId="LFS_4" block="○○○●○"
-    3,
-    //% blockId="LFS_5" block="○○○○●"
-    4
+    //% block="清屏"
+    2
 }
 
-enum LFSENSORSNUM_MX {
-    //% blockId="LFS_MAX" block="最大值"
-    calibratedMaximumOn,
-    //% blockId="LFS_MIN" block="最小值"
-    calibratedMinimumOn
-}
-
-enum PSSTATE {
-    //% block="○●○"
-    S0,
-    //% block="●○○"
-    S1,
-    //% block="○○●"
-    S2,
-    //% block="●●●"
-    S3,
-    //% block="○○○"
-    S4,
-    //% block="●●○"
-    S5,
-    //% block="○●●"
-    S6,
-}
-
-//% color="#177cb0" iconWidth=50 iconHeight=40
+//% color="#4c8dae" iconWidth=50 iconHeight=40
 namespace digitalTube {
 
     let digitalTubeInitO = `YF4Bit`;
@@ -95,75 +45,43 @@ namespace digitalTube {
     //% BRIGHT.shadow="range"   BRIGHT.params.min=1    BRIGHT.params.max=8    BRIGHT.defl=1
     export function digitalTubeSetBrightness(parameter: any, block: any) {
         let brightness = parameter.BRIGHT.code;
-        Generator.addCode(`${digitalTubeInitO}.setBrightness`, `${digitalTubeInitO}.setBrightness(${brightness});`);
+        Generator.addCode(`${digitalTubeInitO}.setBrightness(${brightness});`);
     }
 
-    //% block="OLED 第[LINE]行 显示[STRING]" blockType="command"
-    //% LINE.shadow="range"   LINE.params.min=1    LINE.params.max=4    LINE.defl=1
-    //% STRING.shadow="string"   STRING.defl="valon"
-    export function oledShowLine(parameter: any, block: any) {
-        let line = parameter.LINE.code;
+    //% block="四位数码管显示字符串[STRING]" blockType="command"
+    //% STRING.shadow="string"   STRING.defl="1234"
+    export function digitalTubeShowStr(parameter: any, block: any) {
         let string = parameter.STRING.code;
-        Generator.addInclude(`Include_DFRobot_SSD1306_I2C`, `#include <DFRobot_SSD1306_I2C.h>`)
-        Generator.addObject(`DFRobot_SSD1306_I2C`, `DFRobot_SSD1306_I2C`, `${valonoled};`);
-        Generator.addSetup(`${valonoled}.begin`, `${valonoled}.begin(0x3d);`);
-        Generator.addCode(`${valonoled}.setCursorLine(${line});\n  ${valonoled}.printLine(${string});`);
+        Generator.addCode(`${digitalTubeInitO}.displayString(String(${string}));`);
     }
 
-    //% block="OLED 在坐标X:[X]Y:16*[Y]显示[STRING]" blockType="command"
-    //% X.shadow="range"   X.params.min=0    X.params.max=127    X.defl=0
-    //% Y.shadow="range"   Y.params.min=1    Y.params.max=4    Y.defl=1
-    //% STRING.shadow="string"   STRING.defl="valon"
-    export function oledShowXY(parameter: any, block: any) {
-        let x = parameter.X.code;
-        let y = parameter.Y.code;
-        let string = parameter.STRING.code;
-        Generator.addInclude(`Include_DFRobot_SSD1306_I2C`, `#include <DFRobot_SSD1306_I2C.h>`)
-        Generator.addObject(`DFRobot_SSD1306_I2C`, `DFRobot_SSD1306_I2C`, `${valonoled};`);
-        Generator.addSetup(`${valonoled}.begin`, `${valonoled}.begin(0x3d);`);
-        Generator.addCode(`${valonoled}.setCursor(${x},${y}-1);\n  ${valonoled}.print(${string});`);
+    //% block="四位数码管显示数字[NUM]" blockType="command"
+    //% NUM.shadow="number"   NUM.defl="123"
+    export function digitalTubeShowNum(parameter: any, block: any) {
+        let num = parameter.NUM.code;
+        Generator.addCode(`${digitalTubeInitO}.displayString((int)${num});`);
+    }
+
+    //% block="四位数码管第[DOT]个小数点[LIGHT]" blockType="command"
+    //% DOT.shadow="range"   DOT.params.min=1    DOT.params.max=4    DOT.defl=1
+    //% LIGHT.shadow="dropdown" LIGHT.options="DOT"  LIGHT.defl=DOT.true
+    export function digitalTubeShowDot(parameter: any, block: any) {
+        let dot = parameter.DOT.code;
+        let light = parameter.LIGHT.code;
+        Generator.addCode(`${digitalTubeInitO}.setDot(${dot}-1, ${light});`);
     }
     
-    //% block="OLED 清屏" blockType="command"
-    export function oledClean(parameter: any, block: any) {
-        Generator.addInclude(`Include_DFRobot_SSD1306_I2C`, `#include <DFRobot_SSD1306_I2C.h>`)
-        Generator.addObject(`DFRobot_SSD1306_I2C`, `DFRobot_SSD1306_I2C`, `${valonoled};`);
-        Generator.addSetup(`${valonoled}.begin`, `${valonoled}.begin(0x3d);`);
-        Generator.addCode(`${valonoled}.fillScreen(0);`);
-    }
-    let irpin = `A0`;
-    let irObject = `irrecv`;
-    //% block="是否读取到引脚A0红外值" blockType="boolean"
-    export function readIR(parameter: any, block: any) {
-        Generator.addInclude(`Include_IRremote`, `#include <IRremote.h>`)
-        Generator.addObject(`Object_IRrecv`, `IRrecv`, `${irObject}(${irpin});`);
-        Generator.addSetup(`${irObject}.enableIRIn`, `${irObject}.enableIRIn();`);
-        Generator.addInclude(`Include_decode_results`,`decode_results  results;`);
-        Generator.addCode(`${irObject}.decode(&results)`);
-    }
-
-    //% block="读到的红外值" blockType="reporter"
-    export function IRVal(parameter: any, block: any) {
-        Generator.addCode(`results.value`);
-    }
-
-    //% block="恢复读取红外值" blockType="command"
-    export function readIRResume(parameter: any, block: any) {
-        Generator.addCode(`${irObject}.resume();`);
+    //% block="四位数码管[CLEAR]" blockType="command"    
+    //% CLEAR.shadow="dropdown"   CLEAR.options="CLEAR"     CLEAR.defl=CLEAR.2
+    export function digitalTubeClear(parameter: any, block: any) {
+        let cle = parameter.CLEAR.code;
+        if( cle === '0'){
+            Generator.addCode(`${digitalTubeInitO}.displayOn();`);
+        }else if( cle === '1'){
+            Generator.addCode(`${digitalTubeInitO}.displayOff();`);
+        }else if( cle === '2'){
+            Generator.addCode(`${digitalTubeInitO}.clear();`);
+        }
     }
     
-    //% block="红外遥控器[BTN]值" blockType="reporter"
-    //% BTN.shadow="dropdown"   BTN.options="IrButton"     BTN.defl=IrButton.0xFFA25D
-    export function IRMiniValue(parameter: any, block: any) {
-        let minibtnval = parameter.BTN.code;
-        Generator.addCode(`${minibtnval}`);
-    }
-
-    //% block="红外遥控器[BTNH]值(手柄式)" blockType="reporter"
-    //% BTNH.shadow="dropdown"   BTNH.options="IrButtonHandle"     BTNH.defl=IrButtonHandle.0xE49BE916
-    export function IRHandleValue(parameter: any, block: any) {
-        let Handlebtnval = parameter.BTNH.code;
-        Generator.addCode(`${Handlebtnval}`);
-    }
-
 }
