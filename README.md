@@ -12,7 +12,7 @@
 
 
 ## 相关链接 Links
-* 本项目加载链接: https://github.com/YFROBOT-TM
+* 本项目加载链接: https://github.com/YFROBOTZL/ext-yfrobot-NixieTube
 
 * 产品购买链接: [YFROBOT商城](https://www.yfrobot.com/)、[YFROBOT淘宝商城](https://yfrobot.taobao.com/).
 
