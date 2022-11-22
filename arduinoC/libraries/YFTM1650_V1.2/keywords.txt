@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map For TaskManager
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+YFTM1650	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init	KEYWORD2
+clear	KEYWORD2
+displayOn	KEYWORD2
+displayOff	KEYWORD2
+displayString	KEYWORD2
+displayRunning	KEYWORD2
+displayRunningShift	KEYWORD2
+setBrightness	KEYWORD2
+setDot	KEYWORD2
+displayOneDigi	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
