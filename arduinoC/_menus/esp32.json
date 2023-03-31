@@ -51,7 +51,9 @@
 			["H", "13"],
 			["O", "14"],
 			["N", "15"]
-		]
+		],
+        "default_digitalTubeInit_DIOPIN":"P8",
+        "default_digitalTubeInit_SCKPIN":"P9"
 	},
 	"PIN_DigitalRead": {
 		"menu": [

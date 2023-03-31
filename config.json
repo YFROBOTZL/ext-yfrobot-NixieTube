@@ -4,21 +4,21 @@
     "en": "4 digital tube"
   },
   "description": {
-    "zh-cn": "YFROBOT 4位数码管模块",
-    "en": "YFROBOT 4 digital tube"
+    "zh-cn": "YFROBOT 4位数码管模块-V0.0.3",
+    "en": "YFROBOT 4 digital tube-V0.0.3"
   },
   "author": "YFROBOT",
   "email": "yfrobot@qq.com",
   "license": "MIT",
   "isBoard": false,
   "id": "yfrobot_tube",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "platform": [ "win", "mac", "web" ],
   "asset": {
     "arduinoC": {
       "dir": "arduinoC/",
-      "version": "0.0.1",
-      "board": [ "microbit", "esp32", "arduino","arduinounor3","arduinonano", "mega2560", "leonardo" ],
+      "version": "0.0.2",
+      "board": [ "microbit", "esp32", "arduino", "arduinounor3","arduinonano", "mega2560", "leonardo", "pico", "firebeetleesp32", "firebeetleesp32e" ],
       "main": "main.ts"
     }
   }

@@ -94,7 +94,9 @@
 			["51(MOSI)", "51"],
 			["52(SCK)", "52"],
 			["53(SS)", "53"]
-		]
+		],
+        "default_digitalTubeInit_DIOPIN":"8",
+        "default_digitalTubeInit_SCKPIN":"9"
 	},
 	"PIN_DigitalRead": {
 		"menu": [

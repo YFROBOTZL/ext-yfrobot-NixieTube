@@ -25,7 +25,9 @@
 			["D7", "D7"],
 			["D8", "D8"],
 			["D9", "D9"]
-		]
+		],
+        "default_digitalTubeInit_DIOPIN":"D2",
+        "default_digitalTubeInit_SCKPIN":"D3"
 	},
 	"PIN_DigitalRead": {
 		"menu": [
